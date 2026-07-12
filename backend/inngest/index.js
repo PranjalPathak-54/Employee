@@ -8,9 +8,9 @@ import sendEmail from "../config/nodemailer.js";
 export const inngest = new Inngest({ id: "pranjal-pathak", eventKey: process.env.INNGEST_EVENT_KEY });
 
 const autoCheckout = inngest.createFunction(
-  { id: "auto-check-out", triggers:[{ event: "test/hello.world" }]},
+  { id: "auto-check-out", triggers:[{ event: "employee/check-out" }]},
   async ({ event, step }) => {
-    const [employeeId,attendanceId]=event.data
+    const {employeeId,attendanceId}=event.data
     await step.sleepUntil("wait-for-the-9-hours",new Date(new Date().getTime() + 9*60*60*1000))
     let attendances=await attendance.findById(attendanceId)
     if(!attendances?.checkOut){
